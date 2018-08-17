@@ -51,7 +51,7 @@ public class WebServer {
 
 				
 			}
-
+			if (value == null) value = "Key does not exist";
 			writeResponse(httpExchange, value);
 		}
 	}
