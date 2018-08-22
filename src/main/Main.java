@@ -6,7 +6,7 @@ import java.util.Properties;
 public class Main {
 	public LRUCache lruCache;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		long cacheSize;
 		long maxTime;
 		int httpPort;
@@ -34,35 +34,16 @@ public class Main {
 			maxTime = 60000;
 			httpPort = 8080;
 			redisPort = 6379;
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 
 		LRUCache cache = LRUCache.getInstance();
 		cache.init(cacheSize, maxTime);
 
-		RedisClient redis = null;
-		try {
-			redis = RedisClient.getInstance();
-			redis.init("localhost", redisPort);
-		} catch (Exception e) {
-			System.out.println("Could not connect to redis server");
-			e.printStackTrace();
-		}
+		RedisClient redis = RedisClient.getInstance();
+		redis.init("localhost", redisPort);
 
 		WebServer ws = null;
-		try {
-			ws = new WebServer(httpPort);
-		} catch (Exception e) {
-			System.out.println("Could not launch web server");
-			e.printStackTrace();
-		}
+		ws = new WebServer(httpPort);
 		ws.start();
 	}
 
