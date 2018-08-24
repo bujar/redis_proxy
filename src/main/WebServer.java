@@ -42,14 +42,18 @@ public class WebServer {
 			Map<String, String> parms = WebServer.queryToMap(httpExchange
 					.getRequestURI().getQuery());
 			String key = parms.get("key");
-			String value = LRUCache.getInstance().get(key);
-			if (value == null) {
-				value = RedisClient.getInstance().get(key);
-				LRUCache.getInstance().set(key, value);
+			if (key != null) {
+				String value = LRUCache.getInstance().get(key);
+				if (value == null) {
+					value = RedisClient.getInstance().get(key);
+					LRUCache.getInstance().set(key, value);
+				}
+				if (value == null)
+					value = "Key does not exist";
+				writeResponse(httpExchange, value);
+			} else {
+				writeResponse(httpExchange, "Invalid parameters");
 			}
-			if (value == null)
-				value = "Key does not exist";
-			writeResponse(httpExchange, value);
 		}
 	}
 
@@ -67,12 +71,15 @@ public class WebServer {
 					.getRequestURI().getQuery());
 			String key = parms.get("key");
 			String value = parms.get("value");
-
-			RedisClient.getInstance().set(key, value);
-
-			LRUCache.getInstance().set(key, value);
-			writeResponse(httpExchange, "Successfully added " + key + "/"
-					+ value);
+			if (key != null && value != null){
+				RedisClient.getInstance().set(key, value);
+				LRUCache.getInstance().set(key, value);
+				writeResponse(httpExchange, "Successfully added " + key + "/"
+						+ value);
+			}
+			else {
+				writeResponse(httpExchange, "Invalid parameters");
+			}
 		}
 	}
 
