@@ -3,12 +3,12 @@
 This application serves as a proxy between a user and a backing redis db. This proxy implements a local cache which replicates key/value pairs that are stored in the db. The cache is used for faster retrieval but it has a fixed size and expiration time for entries in the cache. A request to our proxy app would contain the key of the item we are searching for. We first check the local cache for the key and if it is not found there, we then check the backing redis db for the key. We then return the value to the user.
 
 ## Compile and run
-In one terminal window:
+To start the HTTP server and redis container through docker:
 ```
-docker-compose up   # runs redis server through docker
+docker-compose up   # launches two containers for redis and HTTP server
 ```
 
-In second terminal window:
+To build and run tests locally:
 ```
 make		# compiles .class files into bin/
 make test	# compiles junit tests
@@ -18,7 +18,6 @@ make run	# runs web server for testing HTTP endpoints via web browser or curl
 
 ### Dependencies
 - Docker (docker & docker-compose)
-- Java 7 or above
 
 ## Components
  ### HTTP server
@@ -63,6 +62,5 @@ make run	# runs web server for testing HTTP endpoints via web browser or curl
 
 ## Requirements Omitted
  - Single-click build and test
-   - I was not successful in setting up a docker image to build and compile the code in a Java environment. I got this mostly working but there was an issue with the HTTP server responses when running in docker. Therefore, Java 7 is a prerequisite for the host machine to run this application
  - Bonus Requirements
    - I was not able to complete these due to time restrictions

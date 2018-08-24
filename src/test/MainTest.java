@@ -44,7 +44,7 @@ public class MainTest {
 		cache.init(cacheSize, maxTime);
 
 		RedisClient redis = RedisClient.getInstance();
-		redis.init("localhost", redisPort);
+		redis.init(redisPort);
 
 		WebServer ws = null;
 		ws = new WebServer(httpPort);
