@@ -15,12 +15,22 @@ public class LRUCache {
 	private LRUCache() {
 		// empty singleton instantiation
 	}
+	
+	/**
+	 * Creates Singleton class using inner static helper class. This 
+	 * gets loaded into memory when getInstance() is first called. This 
+	 * method avoids slowdown of having to use synchronization.
+	 * 
+	 * Known as the Bill Pugh Singleton Implementation
+	 * Reference: https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
+	 * 
+	 */
+	private static class LRUCacheHelper {
+		private static final LRUCache lruCache = new LRUCache();
+	}
 
 	public static LRUCache getInstance() {
-		if (lruCache == null)
-			lruCache = new LRUCache();
-
-		return lruCache;
+		return LRUCacheHelper.lruCache;
 	}
 
 	public void init(long maxSize, long maxCacheTime) throws Exception {

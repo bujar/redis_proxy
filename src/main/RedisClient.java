@@ -12,11 +12,20 @@ public class RedisClient {
 		// empty singleton instantiation
 	}
 
+	/**
+	 * Creates Singleton class using inner static helper class. This 
+	 * gets loaded into memory when getInstance() is first called. This 
+	 * method avoids slowdown of having to use synchronization.
+	 * 
+	 * Known as the Bill Pugh Singleton Implementation
+	 * Reference: https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples
+	 * 
+	 */
+	private static class RedisClientHelper {
+		private static final RedisClient redisClient = new RedisClient();
+	}
 	public static RedisClient getInstance() {
-		if (redisClient == null)
-			redisClient = new RedisClient();
-
-		return redisClient;
+		return RedisClientHelper.redisClient;
 	}
 
 	public void init(String redisHost, int redisPort) throws Exception {
