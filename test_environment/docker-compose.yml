@@ -1,0 +1,6 @@
+redis:
+  image: redis
+  container_name: "rediscontainer-test"
+  ports:
+    - "6379:6379"
+

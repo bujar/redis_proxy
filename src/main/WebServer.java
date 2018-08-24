@@ -46,9 +46,6 @@ public class WebServer {
 			if (value == null) {
 				value = RedisClient.getInstance().get(key);
 				LRUCache.getInstance().set(key, value);
-				String v = LRUCache.getInstance().get(key);
-				System.out.println("Retrieved " + v + " from cache");
-
 			}
 			if (value == null)
 				value = "Key does not exist";

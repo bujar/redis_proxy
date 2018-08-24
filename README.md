@@ -8,8 +8,10 @@ To start the HTTP server and redis container through docker:
 docker-compose up   # launches two containers for redis and HTTP server
 ```
 
-To build and run tests locally:
+To set up testing environment and build and run tests locally:
 ```
+cd test_environment
+docker-compose up	# launches redis instance in a new container
 make		# compiles .class files into bin/
 make test	# compiles junit tests
 make run_test	# launches junit tests

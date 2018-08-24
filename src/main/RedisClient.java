@@ -30,7 +30,9 @@ public class RedisClient {
 
 	public void init(int redisPort) throws Exception {
 		if (pool == null) {
-			pool = new JedisPool(new JedisPoolConfig(), System.getenv("REDIS_HOST"));
+			String redisHost = System.getenv("REDIS_HOST");
+			if (redisHost == null) redisHost = "localhost";
+			pool = new JedisPool(new JedisPoolConfig(), redisHost);
 
 			try (Jedis jedis = pool.getResource()) {
 				System.out.println("Connected to Redis sucessfully");

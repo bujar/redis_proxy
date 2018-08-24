@@ -44,10 +44,11 @@ public class MainTest {
 		cache.init(cacheSize, maxTime);
 
 		RedisClient redis = RedisClient.getInstance();
+		
 		redis.init(redisPort);
 
 		WebServer ws = null;
-		ws = new WebServer(httpPort);
+		ws = new WebServer(8080);
 		ws.start();
 
 		Result result = JUnitCore.runClasses(LRUCacheTest.class);
